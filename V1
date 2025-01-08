@@ -92,7 +92,7 @@ local iceCube = Instance.new("ImageLabel")
 iceCube.Size = UDim2.new(0, 100, 0, 100)
 iceCube.Position = UDim2.new(0.5, -50, 0.5, -50)
 iceCube.BackgroundTransparency = 1
-iceCube.Image = "rbxassetid://18228998180"
+iceCube.Image = "rbxassetid://18228998180" -- Updated image asset ID
 iceCube.Visible = false
 iceCube.Parent = screenGui
 
