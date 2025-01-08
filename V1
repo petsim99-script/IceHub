@@ -97,11 +97,13 @@ end
 -- Make the ice cube draggable
 makeDraggable(iceCube)
 
--- Print loading progress in the console
+-- Print loading progress in the console in one line
+local loadingMessage = "Ice Hub is loading "
 for i = 0, 100 do
-    print("Ice Hub is loading " .. i .. "%")
+    io.write(loadingMessage .. i .. "%\r")
     wait(0.05) -- Adjust the wait time as needed
 end
+print("") -- Move to the next line after loading is complete
 
 -- Error handling
 local function handleError(err)
