@@ -73,6 +73,21 @@ iceCube.Image = "rbxassetid://129272687596260"
 iceCube.Visible = false
 iceCube.Parent = screenGui
 
+-- Create the loading bar
+local loadingBarFrame = Instance.new("Frame")
+loadingBarFrame.Size = UDim2.new(0, 300, 0, 50)
+loadingBarFrame.Position = UDim2.new(0.5, -150, 0.5, -25)
+loadingBarFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+loadingBarFrame.BorderSizePixel = 0
+loadingBarFrame.Parent = screenGui
+
+local loadingBar = Instance.new("Frame")
+loadingBar.Size = UDim2.new(0, 0, 1, 0)
+loadingBar.Position = UDim2.new(0, 0, 0, 0)
+loadingBar.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+loadingBar.BorderSizePixel = 0
+loadingBar.Parent = loadingBarFrame
+
 -- Function to close the GUI with animation
 local function closeGui()
     mainFrame:TweenPosition(UDim2.new(0.5, -200, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.5, true, function()
@@ -127,13 +142,17 @@ end
 -- Make the ice cube draggable
 makeDraggable(iceCube)
 
--- Print loading progress in the console in one line
+-- Print loading progress in the console in one line and update the loading bar
 local loadingMessage = "Ice Hub is loading "
 for i = 0, 100 do
     io.write(loadingMessage .. i .. "%\r")
+    loadingBar.Size = UDim2.new(i / 100, 0, 1, 0)
     wait(0.05) -- Adjust the wait time as needed
 end
 print("") -- Move to the next line after loading is complete
+
+-- Hide the loading bar after loading is complete
+loadingBarFrame.Visible = false
 
 -- Error handling
 local function handleError(err)
