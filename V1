@@ -199,6 +199,4 @@ local function updateFlySpeed()
     humanoid.FlySpeed = tonumber(flySpeedSlider.Text:match("%d+"))
 end
 
--- Connect the sliders to their respective functions
-walkSpeedSlider.MouseButton1Click:Connect(function()
-   [_{{{CITATION{{{_1{](https://github.com/cjdjmj/aaa42/tree/43ef68a79bec18dc8f122bba912145517cfbb80f/README.md)[_{{{CITATION{{{_2{](https://github.com/dawn-spec/dawn-spec/tree/c7e84064bc5dc5413f9801e705a8c179c0457b68/DawnHehe.md)[_{{{CITATION{{{_3{](https://github.com/RinRi3PointXD13/RinRi3PointXD13/tree/e8f6c2c2a0ab70631403a8fec33811351c3c6c5e/README.md)
+-- Connect the sliders to their
