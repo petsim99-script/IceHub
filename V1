@@ -3,14 +3,12 @@ if _G.IceHubLoaded then
     -- Create the warning UI
     local warningGui = Instance.new("ScreenGui")
     warningGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-
     local warningFrame = Instance.new("Frame")
     warningFrame.Size = UDim2.new(0, 300, 0, 100)
     warningFrame.Position = UDim2.new(0.5, -150, 0.5, -50)
     warningFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     warningFrame.BorderSizePixel = 0
     warningFrame.Parent = warningGui
-
     local warningText = Instance.new("TextLabel")
     warningText.Size = UDim2.new(1, 0, 1, 0)
     warningText.Position = UDim2.new(0, 0, 0, 0)
@@ -21,7 +19,6 @@ if _G.IceHubLoaded then
     warningText.Font = Enum.Font.SourceSansBold
     warningText.TextSize = 24
     warningText.Parent = warningFrame
-
     return -- Stop execution if the script is already loaded
 end
 
@@ -111,7 +108,7 @@ end
 -- Connect the close button to the close function
 closeButton.MouseButton1Click:Connect(closeGui)
 
--- Function to make a frame draggable
+-- Function to make the ice cube draggable
 local function makeDraggable(frame)
     local dragging
     local dragInput
@@ -140,3 +137,29 @@ local function makeDraggable(frame)
     frame.InputChanged:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
             dragInput = input
+        end
+    end)
+
+    game:GetService("UserInputService").InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            update(input)
+        end
+    end)
+end
+
+-- Make the ice cube draggable
+makeDraggable(iceCube)
+
+-- Error handling
+local function handleError(err)
+    warn("An error occurred: " .. err)
+end
+
+-- Wrap the main code in a pcall to catch errors
+local success, err = pcall(function()
+    -- Your main code here
+end)
+
+if not success then
+    handleError(err)
+end
