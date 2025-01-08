@@ -50,12 +50,10 @@ loadingBar.Parent = loadingBarFrame
 -- Print loading progress in the console in one line and update the loading bar
 local loadingMessage = "Ice Hub is loading "
 for i = 0, 100 do
-    io.write(loadingMessage .. i .. "%\r")
-    io.flush()
+    print(loadingMessage .. i .. "%")
     loadingBar.Size = UDim2.new(i / 100, 0, 1, 0)
     wait(0.05) -- Adjust the wait time as needed
 end
-print("") -- Move to the next line after loading is complete
 
 -- Hide the loading bar after loading is complete
 loadingBarFrame.Visible = false
@@ -156,15 +154,4 @@ end
 makeDraggable(iceCube)
 
 -- Error handling
-local function handleError(err)
-    print("Error: " .. err)
-end
-
--- Example usage of error handling
-local success, err = pcall(function()
-    -- Your code here
-end)
-
-if not success then
-    handleError(err)
-end
+local function handle
