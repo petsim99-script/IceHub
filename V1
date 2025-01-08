@@ -1,0 +1,55 @@
+-- Create the ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create the main frame
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 400, 0, 300)
+mainFrame.Position = UDim2.new(0.5, -200, 0.5, -150)
+mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+mainFrame.BorderSizePixel = 0
+mainFrame.Parent = screenGui
+
+-- Create the title
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 50)
+title.Position = UDim2.new(0, 0, 0, 0)
+title.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+title.BorderSizePixel = 0
+title.Text = "Ice Hub"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Font = Enum.Font.SourceSansBold
+title.TextSize = 24
+title.Parent = mainFrame
+
+-- Create the close button
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0, 50, 0, 50)
+closeButton.Position = UDim2.new(1, -50, 0, 0)
+closeButton.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+closeButton.BorderSizePixel = 0
+closeButton.Text = "X"
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeButton.Font = Enum.Font.SourceSansBold
+closeButton.TextSize = 24
+closeButton.Parent = mainFrame
+
+-- Create the ice cube image
+local iceCube = Instance.new("ImageLabel")
+iceCube.Size = UDim2.new(0, 100, 0, 100)
+iceCube.Position = UDim2.new(0.5, -50, 0.5, -50)
+iceCube.BackgroundTransparency = 1
+iceCube.Image = "rbxassetid://INSERT_ICE_CUBE_IMAGE_ID_HERE"
+iceCube.Visible = false
+iceCube.Parent = screenGui
+
+-- Function to close the GUI with animation
+local function closeGui()
+    mainFrame:TweenPosition(UDim2.new(0.5, -200, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.5, true, function()
+        mainFrame.Visible = false
+        iceCube.Visible = true
+    end)
+end
+
+-- Connect the close button to the close function
+closeButton.MouseButton1Click:Connect(closeGui)
