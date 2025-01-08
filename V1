@@ -159,16 +159,46 @@ end
 -- Make the main frame draggable
 makeDraggable(mainFrame)
 
--- Error handling
-local function handleError(err)
-    warn("An error occurred: " .. err)
+-- Create the walk speed slider
+local walkSpeedSlider = Instance.new("TextButton")
+walkSpeedSlider.Size = UDim2.new(0, 200, 0, 50)
+walkSpeedSlider.Position = UDim2.new(0, 10, 0, 70)
+walkSpeedSlider.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+walkSpeedSlider.BorderSizePixel = 0
+walkSpeedSlider.Text = "Walk Speed: 16"
+walkSpeedSlider.TextColor3 = Color3.fromRGB(255, 255, 255)
+walkSpeedSlider.Font = Enum.Font.SourceSansBold
+walkSpeedSlider.TextSize = 24
+walkSpeedSlider.Parent = mainFrame
+
+-- Create the fly speed slider
+local flySpeedSlider = Instance.new("TextButton")
+flySpeedSlider.Size = UDim2.new(0, 200, 0, 50)
+flySpeedSlider.Position = UDim2.new(0, 10, 0, 130)
+flySpeedSlider.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+flySpeedSlider.BorderSizePixel = 0
+flySpeedSlider.Text = "Fly Speed: 50"
+flySpeedSlider.TextColor3 = Color3.fromRGB(255, 255, 255)
+flySpeedSlider.Font = Enum.Font.SourceSansBold
+flySpeedSlider.TextSize = 24
+flySpeedSlider.Parent = mainFrame
+
+-- Function to update walk speed
+local function updateWalkSpeed()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.WalkSpeed = tonumber(walkSpeedSlider.Text:match("%d+"))
 end
 
--- Wrap the main code in a pcall to catch errors
-local success, err = pcall(function()
-    -- Your main code here
-end)
-
-if not success then
-    handleError(err)
+-- Function to update fly speed
+local function updateFlySpeed()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.FlySpeed = tonumber(flySpeedSlider.Text:match("%d+"))
 end
+
+-- Connect the sliders to their respective functions
+walkSpeedSlider.MouseButton1Click:Connect(function()
+   [_{{{CITATION{{{_1{](https://github.com/cjdjmj/aaa42/tree/43ef68a79bec18dc8f122bba912145517cfbb80f/README.md)[_{{{CITATION{{{_2{](https://github.com/dawn-spec/dawn-spec/tree/c7e84064bc5dc5413f9801e705a8c179c0457b68/DawnHehe.md)[_{{{CITATION{{{_3{](https://github.com/RinRi3PointXD13/RinRi3PointXD13/tree/e8f6c2c2a0ab70631403a8fec33811351c3c6c5e/README.md)
