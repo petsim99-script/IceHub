@@ -47,6 +47,7 @@ iceCube.Parent = screenGui
 local function closeGui()
     mainFrame:TweenPosition(UDim2.new(0.5, -200, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.5, true, function()
         mainFrame.Visible = false
+        wait(0.1) -- Add a small delay
         iceCube.Visible = true
     end)
 end
