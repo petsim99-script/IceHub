@@ -87,68 +87,35 @@ closeButton.Font = Enum.Font.SourceSansBold
 closeButton.TextSize = 24
 closeButton.Parent = mainFrame
 
--- Create the ice cube image
-local iceCube = Instance.new("ImageLabel")
-iceCube.Size = UDim2.new(0, 100, 0, 100)
-iceCube.Position = UDim2.new(0.5, -50, 0.5, -50)
-iceCube.BackgroundTransparency = 1
-iceCube.Image = "rbxassetid://18228998180" -- Updated image asset ID
-iceCube.Visible = false
-iceCube.Parent = screenGui
+-- Create the open/close label
+local toggleLabel = Instance.new("TextLabel")
+toggleLabel.Size = UDim2.new(0, 100, 0, 50)
+toggleLabel.Position = UDim2.new(0, 10, 0, 10)
+toggleLabel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+toggleLabel.BorderSizePixel = 0
+toggleLabel.Text = "Open/Close"
+toggleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+toggleLabel.Font = Enum.Font.SourceSansBold
+toggleLabel.TextSize = 24
+toggleLabel.Parent = screenGui
+
+-- Function to toggle the GUI visibility
+local function toggleGui()
+    mainFrame.Visible = not mainFrame.Visible
+end
+
+-- Connect the toggle label to the toggle function
+toggleLabel.MouseButton1Click:Connect(toggleGui)
 
 -- Function to close the GUI with animation
 local function closeGui()
     mainFrame:TweenPosition(UDim2.new(0.5, -200, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.5, true, function()
         mainFrame.Visible = false
-        wait(0.1) -- Add a small delay
-        iceCube.Visible = true
     end)
 end
 
 -- Connect the close button to the close function
 closeButton.MouseButton1Click:Connect(closeGui)
-
--- Function to make the ice cube draggable
-local function makeDraggable(frame)
-    local dragging
-    local dragInput
-    local dragStart
-    local startPos
-
-    local function update(input)
-        local delta = input.Position - dragStart
-        frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-    end
-
-    frame.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = true
-            dragStart = input.Position
-            startPos = frame.Position
-
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
-        end
-    end)
-
-    frame.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-            dragInput = input
-        end
-    end)
-
-    game:GetService("UserInputService").InputChanged:Connect(function(input)
-        if input == dragInput and dragging then
-            update(input)
-        end
-    end)
-end
-
--- Make the ice cube draggable
-makeDraggable(iceCube)
 
 -- Error handling
 local function handleError(err)
