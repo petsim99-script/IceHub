@@ -130,7 +130,7 @@ local function makeDraggable(frame)
     end
 
     frame.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType.Touch then
             dragging = true
             dragStart = input.Position
             startPos = frame.Position
@@ -201,4 +201,4 @@ end
 
 -- Connect the sliders to their respective functions
 walkSpeedSlider.MouseButton1Click:Connect(updateWalkSpeed)
-fly[_{{{CITATION{{{_1{](https://github.com/cjdjmj/aaa42/tree/43ef68a79bec18dc8f122bba912145517cfbb80f/README.md)
+flySpeedSlider.MouseButton1[_{{{CITATION{{{_1{](https://github.com/cjdjmj/aaa42/tree/43ef68a79bec18dc8f122bba912145517cfbb80f/README.md)
