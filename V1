@@ -144,7 +144,7 @@ local function makeDraggable(frame)
     end)
 
     frame.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType.Touch then
             dragInput = input
         end
     end)
@@ -199,4 +199,5 @@ local function updateFlySpeed()
     humanoid.FlySpeed = tonumber(flySpeedSlider.Text:match("%d+"))
 end
 
--- Connect the sliders to their
+-- Connect the sliders to their respective functions
+walkSpeedSlider.MouseButton1Click[_{{{CITATION{{{_1{](https://github.com/cjdjmj/aaa42/tree/43ef68a79bec18dc8f122bba912145517cfbb80f/README.md)
