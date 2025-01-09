@@ -200,4 +200,5 @@ local function updateFlySpeed()
 end
 
 -- Connect the sliders to their respective functions
-walkSpeedSlider.MouseButton1Click:Connect(updateWalkSpeed[_{{{CITATION{{{_1{](https://github.com/cjdjmj/aaa42/tree/43ef68a79bec18dc8f122bba912145517cfbb80f/README.md)
+walkSpeedSlider.MouseButton1Click:Connect(updateWalkSpeed)
+fly[_{{{CITATION{{{_1{](https://github.com/cjdjmj/aaa42/tree/43ef68a79bec18dc8f122bba912145517cfbb80f/README.md)
