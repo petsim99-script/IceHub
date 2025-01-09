@@ -3,43 +3,76 @@
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
 
 -- UI Setup
 local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame", ScreenGui)
+ScreenGui.Parent = player:WaitForChild("PlayerGui")
+
+local Frame = Instance.new("Frame")
 Frame.Size = UDim2.new(0, 300, 0, 200)
 Frame.Position = UDim2.new(0.5, -150, 0.5, -100)
+Frame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+Frame.Parent = ScreenGui
 
--- Walk Speed Slider
-local walkSpeedSlider = Instance.new("Slider", Frame)
-walkSpeedSlider.Size = UDim2.new(1, 0, 0, 50)
-walkSpeedSlider.Position = UDim2.new(0, 0, 0, 20)
-walkSpeedSlider.Min = 16
-walkSpeedSlider.Max = 100
-walkSpeedSlider.Value = character.Humanoid.WalkSpeed
+local UIScale = Instance.new("UIScale", Frame)
+UIScale.Scale = 1.2
 
-walkSpeedSlider.Changed:Connect(function(value)
-    character.Humanoid.WalkSpeed = value
-end)
+-- Walk Speed Slider Setup
+local walkSpeedLabel = Instance.new("TextLabel")
+walkSpeedLabel.Size = UDim2.new(1, 0, 0, 20)
+walkSpeedLabel.Position = UDim2.new(0, 0, 0, 10)
+walkSpeedLabel.Text = "Walk Speed: 16"
+walkSpeedLabel.TextColor3 = Color3.new(1, 1, 1)
+walkSpeedLabel.BackgroundTransparency = 1
+walkSpeedLabel.Parent = Frame
 
--- Fly Mode Toggle
-local flyButton = Instance.new("TextButton", Frame)
-flyButton.Size = UDim2.new(1, 0, 0, 50)
-flyButton.Position = UDim2.new(0, 0, 0, 80)
-flyButton.Text = "Toggle Fly Mode"
+local walkSpeedSlider = Instance.new("TextBox")
+walkSpeedSlider.Size = UDim2.new(1, 0, 0, 30)
+walkSpeedSlider.Position = UDim2.new(0, 0, 0, 40)
+walkSpeedSlider.Text = tostring(humanoid.WalkSpeed)
+walkSpeedSlider.TextScaled = true
+walkSpeedSlider.TextColor3 = Color3.new(0, 0, 0)
+walkSpeedSlider.BackgroundColor3 = Color3.new(0.8, 0.8, 0.8)
+walkSpeedSlider.Parent = Frame
 
-local flying = false
-flyButton.MouseButton1Click:Connect(function()
-    flying = not flying
-    if flying then
-        character.Humanoid.PlatformStand = true
-        while flying do
-            character:Move(Vector3.new(0, 1, 0))  -- Move up
-            wait(0.1)
+walkSpeedSlider.FocusLost:Connect(function(enterPressed)
+    if enterPressed then
+        local value = tonumber(walkSpeedSlider.Text)
+        if value and value >= 16 and value <= 100 then
+            humanoid.WalkSpeed = value
+            walkSpeedLabel.Text = "Walk Speed: " .. value
+        else
+            walkSpeedSlider.Text = tostring(humanoid.WalkSpeed)
         end
-        character.Humanoid.PlatformStand = false
     end
 end)
 
--- Initialize UI
-ScreenGui.Parent = game.CoreGui
+-- Fly Mode Toggle
+local flyButton = Instance.new("TextButton")
+flyButton.Size = UDim2.new(1, 0, 0, 50)
+flyButton.Position = UDim2.new(0, 0, 0, 90)
+flyButton.Text = "Toggle Fly Mode"
+flyButton.TextColor3 = Color3.new(1, 1, 1)
+flyButton.BackgroundColor3 = Color3.new(0.3, 0.7, 0.3)
+flyButton.Parent = Frame
+
+local flying = false
+local flyConnection
+
+flyButton.MouseButton1Click:Connect(function()
+    flying = not flying
+    if flying then
+        flyButton.Text = "Flying..."
+        humanoid.PlatformStand = true
+        flyConnection = game:GetService("RunService").Heartbeat:Connect(function()
+            character:SetPrimaryPartCFrame(character.PrimaryPart.CFrame + Vector3.new(0, 0.5, 0))
+        end)
+    else
+        flyButton.Text = "Toggle Fly Mode"
+        humanoid.PlatformStand = false
+        if flyConnection then
+            flyConnection:Disconnect()
+        end
+    end
+end)
