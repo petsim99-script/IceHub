@@ -1,46 +1,43 @@
 -- Skriptname: Icehub
--- Lokales Skript
+-- Für Executor
 
+-- Warten, bis der Spieler geladen ist
 local player = game.Players.LocalPlayer
-local gui = Instance.new("ScreenGui")
-local frame = Instance.new("Frame")
-local loadingLabel = Instance.new("TextLabel")
-local playerDropdown = Instance.new("TextButton")
-local walkSpeedSlider = Instance.new("TextBox")
-local flySpeedSlider = Instance.new("TextBox")
-local flyModeButton = Instance.new("TextButton")
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- GUI erstellen
+local gui = Instance.new("ScreenGui", playerGui)
+local frame = Instance.new("Frame", gui)
+local loadingLabel = Instance.new("TextLabel", frame)
+local playerDropdown = Instance.new("TextButton", frame)
+local walkSpeedSlider = Instance.new("TextBox", frame)
+local flySpeedSlider = Instance.new("TextBox", frame)
+local flyModeButton = Instance.new("TextButton", frame)
 
 -- GUI-Einstellungen
-gui.Parent = player:WaitForChild("PlayerGui")
 frame.Size = UDim2.new(0.3, 0, 0.5, 0)
 frame.Position = UDim2.new(0.35, 0, 0.25, 0)
 frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-frame.Parent = gui
 
 loadingLabel.Size = UDim2.new(1, 0, 0.1, 0)
 loadingLabel.Position = UDim2.new(0, 0, 0, 0)
 loadingLabel.Text = "Icehub is loading 0%"
-loadingLabel.Parent = frame
 
 playerDropdown.Size = UDim2.new(1, 0, 0.1, 0)
 playerDropdown.Position = UDim2.new(0, 0, 0.1, 0)
 playerDropdown.Text = "Wähle Spieler"
-playerDropdown.Parent = frame
 
 walkSpeedSlider.Size = UDim2.new(1, 0, 0.1, 0)
 walkSpeedSlider.Position = UDim2.new(0, 0, 0.2, 0)
 walkSpeedSlider.PlaceholderText = "Walkspeed"
-walkSpeedSlider.Parent = frame
 
 flySpeedSlider.Size = UDim2.new(1, 0, 0.1, 0)
 flySpeedSlider.Position = UDim2.new(0, 0, 0.3, 0)
 flySpeedSlider.PlaceholderText = "Flyspeed"
-flySpeedSlider.Parent = frame
 
 flyModeButton.Size = UDim2.new(1, 0, 0.1, 0)
 flyModeButton.Position = UDim2.new(0, 0, 0.4, 0)
 flyModeButton.Text = "Fly Mode aktivieren"
-flyModeButton.Parent = frame
 
 -- Ladebalken
 for i = 1, 100 do
@@ -67,7 +64,7 @@ local function changeSpeeds()
     local flySpeed = tonumber(flySpeedSlider.Text) or 50 -- Standard-Flyspeed
 
     player.Character.Humanoid.WalkSpeed = walkSpeed
-    -- Hier kann der Flyspeed angepasst werden
+    -- Hier kannst du Flyspeed anpassen
 end
 
 -- Flymode aktivieren
@@ -81,7 +78,7 @@ local function toggleFlyMode()
             wait(0.1)
             -- Standard Fly Hotkeys
             if game.UserInputService:IsKeyDown(Enum.KeyCode.Space) then
-                player.Character.HumanoidRootPart.Velocity = Vector3.new(0, flySpeedSlider.Text, 0)
+                player.Character.HumanoidRootPart.Velocity = Vector3.new(0, tonumber(flySpeedSlider.Text) or 50, 0)
             end
         end
         player.Character.Humanoid.PlatformStand = false
@@ -93,3 +90,6 @@ playerDropdown.MouseButton1Click:Connect(selectPlayer)
 walkSpeedSlider.FocusLost:Connect(changeSpeeds)
 flySpeedSlider.FocusLost:Connect(changeSpeeds)
 flyModeButton.MouseButton1Click:Connect(toggleFlyMode)
+
+-- In der Konsole ausgeben
+print("Icehub is loading 1-100%")
