@@ -1,204 +1,95 @@
--- Check if the script is already loaded
-if _G.IceHubLoaded then
-    -- Create the warning UI
-    local warningGui = Instance.new("ScreenGui")
-    warningGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-    local warningFrame = Instance.new("Frame")
-    warningFrame.Size = UDim2.new(0, 300, 0, 100)
-    warningFrame.Position = UDim2.new(0.5, -150, 0.5, -50)
-    warningFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    warningFrame.BorderSizePixel = 0
-    warningFrame.Parent = warningGui
-    local warningText = Instance.new("TextLabel")
-    warningText.Size = UDim2.new(1, 0, 1, 0)
-    warningText.Position = UDim2.new(0, 0, 0, 0)
-    warningText.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-    warningText.BorderSizePixel = 0
-    warningText.Text = "Script already Loaded!"
-    warningText.TextColor3 = Color3.fromRGB(255, 255, 255)
-    warningText.Font = Enum.Font.SourceSansBold
-    warningText.TextSize = 24
-    warningText.Parent = warningFrame
-    return -- Stop execution if the script is already loaded
+-- Skriptname: Icehub
+-- Lokales Skript
+
+local player = game.Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+local frame = Instance.new("Frame")
+local loadingLabel = Instance.new("TextLabel")
+local playerDropdown = Instance.new("TextButton")
+local walkSpeedSlider = Instance.new("TextBox")
+local flySpeedSlider = Instance.new("TextBox")
+local flyModeButton = Instance.new("TextButton")
+
+-- GUI-Einstellungen
+gui.Parent = player:WaitForChild("PlayerGui")
+frame.Size = UDim2.new(0.3, 0, 0.5, 0)
+frame.Position = UDim2.new(0.35, 0, 0.25, 0)
+frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+frame.Parent = gui
+
+loadingLabel.Size = UDim2.new(1, 0, 0.1, 0)
+loadingLabel.Position = UDim2.new(0, 0, 0, 0)
+loadingLabel.Text = "Icehub is loading 0%"
+loadingLabel.Parent = frame
+
+playerDropdown.Size = UDim2.new(1, 0, 0.1, 0)
+playerDropdown.Position = UDim2.new(0, 0, 0.1, 0)
+playerDropdown.Text = "Wähle Spieler"
+playerDropdown.Parent = frame
+
+walkSpeedSlider.Size = UDim2.new(1, 0, 0.1, 0)
+walkSpeedSlider.Position = UDim2.new(0, 0, 0.2, 0)
+walkSpeedSlider.PlaceholderText = "Walkspeed"
+walkSpeedSlider.Parent = frame
+
+flySpeedSlider.Size = UDim2.new(1, 0, 0.1, 0)
+flySpeedSlider.Position = UDim2.new(0, 0, 0.3, 0)
+flySpeedSlider.PlaceholderText = "Flyspeed"
+flySpeedSlider.Parent = frame
+
+flyModeButton.Size = UDim2.new(1, 0, 0.1, 0)
+flyModeButton.Position = UDim2.new(0, 0, 0.4, 0)
+flyModeButton.Text = "Fly Mode aktivieren"
+flyModeButton.Parent = frame
+
+-- Ladebalken
+for i = 1, 100 do
+    wait(0.1) -- Kurze Verzögerung, um den Ladebalken sichtbar zu machen
+    loadingLabel.Text = "Icehub is loading " .. i .. "%"
 end
 
--- Mark the script as loaded
-_G.IceHubLoaded = true
+-- Spieler auswählen
+local function selectPlayer()
+    local players = game.Players:GetPlayers()
+    local playerNames = {}
 
--- Create the ScreenGui
-local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-
--- Create the loading bar frame
-local loadingBarFrame = Instance.new("Frame")
-loadingBarFrame.Size = UDim2.new(0, 300, 0, 50)
-loadingBarFrame.Position = UDim2.new(0.5, -150, 0.5, -25)
-loadingBarFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-loadingBarFrame.BorderSizePixel = 0
-loadingBarFrame.Parent = screenGui
-
-local loadingBar = Instance.new("Frame")
-loadingBar.Size = UDim2.new(0, 0, 1, 0)
-loadingBar.Position = UDim2.new(0, 0, 0, 0)
-loadingBar.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-loadingBar.BorderSizePixel = 0
-loadingBar.Parent = loadingBarFrame
-
--- Print loading progress in the console in one line and update the loading bar
-local loadingMessage = "Ice Hub is loading "
-for i = 0, 100 do
-    print(loadingMessage .. i .. "%")
-    loadingBar.Size = UDim2.new(i / 100, 0, 1, 0)
-    wait(0.05) -- Adjust the wait time as needed
-end
-
--- Hide the loading bar after loading is complete
-loadingBarFrame.Visible = false
-
--- Create the main frame
-local mainFrame = Instance.new("Frame")
-mainFrame.Size = UDim2.new(0, 400, 0, 300)
-mainFrame.Position = UDim2.new(0.5, -200, 0.5, -150)
-mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-mainFrame.BorderSizePixel = 0
-mainFrame.Parent = screenGui
-
--- Create the title
-local title = Instance.new("TextLabel")
-title.Size = UDim2.new(1, 0, 0, 50)
-title.Position = UDim2.new(0, 0, 0, 0)
-title.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-title.BorderSizePixel = 0
-title.Text = "Ice Hub"
-title.TextColor3 = Color3.fromRGB(255, 255, 255)
-title.Font = Enum.Font.SourceSansBold
-title.TextSize = 24
-title.Parent = mainFrame
-
--- Create the close button
-local closeButton = Instance.new("TextButton")
-closeButton.Size = UDim2.new(0, 50, 0, 50)
-closeButton.Position = UDim2.new(1, -50, 0, 0)
-closeButton.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-closeButton.BorderSizePixel = 0
-closeButton.Text = "X"
-closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-closeButton.Font = Enum.Font.SourceSansBold
-closeButton.TextSize = 24
-closeButton.Parent = mainFrame
-
--- Create the open/close label
-local toggleLabel = Instance.new("TextLabel")
-toggleLabel.Size = UDim2.new(0, 100, 0, 50)
-toggleLabel.Position = UDim2.new(0, 10, 0, 10)
-toggleLabel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-toggleLabel.BorderSizePixel = 0
-toggleLabel.Text = "Open/Close"
-toggleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-toggleLabel.Font = Enum.Font.SourceSansBold
-toggleLabel.TextSize = 24
-toggleLabel.Parent = screenGui
-
--- Function to toggle the GUI visibility
-local function toggleGui()
-    mainFrame.Visible = not mainFrame.Visible
-end
-
--- Connect the toggle label to the toggle function
-toggleLabel.MouseButton1Click:Connect(toggleGui)
-
--- Function to close the GUI with animation
-local function closeGui()
-    mainFrame:TweenPosition(UDim2.new(0.5, -200, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.5, true, function()
-        mainFrame.Visible = false
-    end)
-end
-
--- Connect the close button to the close function
-closeButton.MouseButton1Click:Connect(closeGui)
-
--- Function to make the main frame draggable
-local function makeDraggable(frame)
-    local dragging
-    local dragInput
-    local dragStart
-    local startPos
-
-    local function update(input)
-        local delta = input.Position - dragStart
-        frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    for _, p in ipairs(players) do
+        table.insert(playerNames, p.Name)
     end
 
-    frame.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType.Touch then
-            dragging = true
-            dragStart = input.Position
-            startPos = frame.Position
-
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
-        end
-    end)
-
-    frame.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType.Touch then
-            dragInput = input
-        end
-    end)
-
-    game:GetService("UserInputService").InputChanged:Connect(function(input)
-        if input == dragInput and dragging then
-            update(input)
-        end
-    end)
+    -- Spieler aus der Liste auswählen
+    playerDropdown.Text = table.concat(playerNames, ", ")
 end
 
--- Make the main frame draggable
-makeDraggable(mainFrame)
+-- Walkspeed und Flyspeed ändern
+local function changeSpeeds()
+    local walkSpeed = tonumber(walkSpeedSlider.Text) or 16 -- Standard-Walkspeed
+    local flySpeed = tonumber(flySpeedSlider.Text) or 50 -- Standard-Flyspeed
 
--- Create the walk speed slider
-local walkSpeedSlider = Instance.new("TextButton")
-walkSpeedSlider.Size = UDim2.new(0, 200, 0, 50)
-walkSpeedSlider.Position = UDim2.new(0, 10, 0, 70)
-walkSpeedSlider.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-walkSpeedSlider.BorderSizePixel = 0
-walkSpeedSlider.Text = "Walk Speed: 16"
-walkSpeedSlider.TextColor3 = Color3.fromRGB(255, 255, 255)
-walkSpeedSlider.Font = Enum.Font.SourceSansBold
-walkSpeedSlider.TextSize = 24
-walkSpeedSlider.Parent = mainFrame
-
--- Create the fly speed slider
-local flySpeedSlider = Instance.new("TextButton")
-flySpeedSlider.Size = UDim2.new(0, 200, 0, 50)
-flySpeedSlider.Position = UDim2.new(0, 10, 0, 130)
-flySpeedSlider.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-flySpeedSlider.BorderSizePixel = 0
-flySpeedSlider.Text = "Fly Speed: 50"
-flySpeedSlider.TextColor3 = Color3.fromRGB(255, 255, 255)
-flySpeedSlider.Font = Enum.Font.SourceSansBold
-flySpeedSlider.TextSize = 24
-flySpeedSlider.Parent = mainFrame
-
--- Function to update walk speed
-local function updateWalkSpeed()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    local humanoid = character:WaitForChild("Humanoid")
-    humanoid.WalkSpeed = tonumber(walkSpeedSlider.Text:match("%d+"))
+    player.Character.Humanoid.WalkSpeed = walkSpeed
+    -- Hier kann der Flyspeed angepasst werden
 end
 
--- Function to update fly speed
-local function updateFlySpeed()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    local humanoid = character:WaitForChild("Humanoid")
-    humanoid.FlySpeed = tonumber(flySpeedSlider.Text:match("%d+"))
+-- Flymode aktivieren
+local flyActive = false
+local function toggleFlyMode()
+    flyActive = not flyActive
+    if flyActive then
+        -- Fly aktivieren
+        player.Character.Humanoid.PlatformStand = true
+        while flyActive do
+            wait(0.1)
+            -- Standard Fly Hotkeys
+            if game.UserInputService:IsKeyDown(Enum.KeyCode.Space) then
+                player.Character.HumanoidRootPart.Velocity = Vector3.new(0, flySpeedSlider.Text, 0)
+            end
+        end
+        player.Character.Humanoid.PlatformStand = false
+    end
 end
 
--- Connect the sliders to their respective functions
-walkSpeedSlider.MouseButton1Click:Connect(updateWalkSpeed)
-flySpeedSlider.MouseButton1[_{{{CITATION{{{_1{](https://github.com/cjdjmj/aaa42/tree/43ef68a79bec18dc8f122bba912145517cfbb80f/README.md)
+-- Event-Handler
+playerDropdown.MouseButton1Click:Connect(selectPlayer)
+walkSpeedSlider.FocusLost:Connect(changeSpeeds)
+flySpeedSlider.FocusLost:Connect(changeSpeeds)
+flyModeButton.MouseButton1Click:Connect(toggleFlyMode)
